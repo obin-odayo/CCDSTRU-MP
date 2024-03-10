@@ -61,7 +61,8 @@ struct player {
 
   Author: Ganituen
 */
-int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2]) {
+int systemFact1(int F[][2], struct orderedPair F1[], struct orderedPair F2[][2],
+                int F3[][2]) {
   int cardinality = 0; // variable of cardinality of F3.
                        // Assume as 0.
   int i, j;
