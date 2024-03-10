@@ -32,14 +32,50 @@
 */
 
 /*
+  binSearch: binary search algorithm for finding key in array.
+
+  @params:
+  - arr [struct orderedPair]: array where we do the search.
+  - size [int]: size of arr.
+  - key [struct orderedPair]: an ordered pair that we try to find in arr.
+
+  @returns:
+  - mid, if index is found.
+  - 0, otherwise.
+  Author: Ganituen
+*/
+int binSearch(struct orderedPair arr[], struct orderedPair key){
+  int low = 0;
+  int high = SIZE_2T - 1; 
+  int mid;
+
+  while (low <= high){
+    mid = low + (high - low) / 2;
+
+    // If the key is found
+    if (arr[mid].x == key.x && arr[mid].y == key.y)
+        // return index
+        return mid;
+    // for key is bigger
+    if (arr[mid].x < key.x || (arr[mid].x == key.x && arr[mid].y < key.y))
+        low = mid + 1;
+    // for key is smaller
+    else
+        high = mid - 1;
+  }
+
+  return 0; // key not found
+}
+
+/*
   systemFact1: checks the first system fact and returns the
   cardinality of F3.
 
   @params:
-  - F [int *]: array F.
-  - F1 [int *]: array F1. Moves of player 1 in board F.
-  - F2 [int *]: array F2. Moves of player 2 in board F.
-  - F3 [int *]: array F3. Available moves in player 3.
+  - F [struct orderedPair]: array F.
+  - F1 [struct orderedPair]: array F1. Moves of player 1 in board F.
+  - F2 [struct orderedPair]: array F2. Moves of player 2 in board F.
+  - F3 [struct orderedPair]: array F3. Available moves in player 3.
 
   @returns:
   - cardinality [int]: cardinality of F3.
@@ -47,15 +83,42 @@
   Author: Ganituen
 */
 int systemFact1(struct orderedPair F[], struct orderedPair F1[], struct orderedPair F2[], struct orderedPair F3[]) {
-    // Get union of F1 and F2
+    int cardinality = 0; // cardinality of F3, the output of the function.
+    int i;
+    int sizeUnion = 0;
     struct orderedPair unionF[SIZE_2T];
+    
+    // Get union of F1 and F2
+    for (i = 0; i < SIZE_2T; i++){
+      // only copy if it is not 0. (i.e., not empty)
+      if (F1[i].x > 0){
+        unionF[i].x = F1[i].x;
+        unionF[i].y = F1[i].y;
+        sizeUnion++;
+      } else break; // break if end of F1
+    }
 
+    // do binary search and add all the ordered pairs in F2 not in unionF
+    for (i = 0; i < SIZE_2T; i++){
+      // run if binSearch is not 0. So key is not found.
+      if(!binSearch(unionF, F2[i])){
+        unionF[sizeUnion].x = F2[i].x;
+        unionF[sizeUnion].y = F2[i].y;
+        sizeUnion++;
+      }
+    }
+
+    // TO DO. SET SUBTRACTION OF F and unionF
+    // TO DO. SET THIS AS F3
+    // TO DO. CALCULATE CARDINALITY OF F3
+        
+    
     return cardinality;
 }
 
 int main()
 {
-  int i, j;
+  int i;
   
   /* ========== SYSTEM INITIALIZATION
 
@@ -97,11 +160,6 @@ int main()
             ___ [2]
   */
   int sizeF3 = systemFact1(complete, A, B, F);
-
-  for (i = 0; i < 12; i++)
-  {
-    printf("F\t (%d, %d)\n", F[i].x, F[i].y);
-  }
 
   return 0;
 }

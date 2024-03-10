@@ -22,12 +22,42 @@
 #include <stdbool.h>
 #include <string.h>
 
+/*
+  type definition for string characters.
+
+  Author: Ganituen
+*/
 typedef char String[32];
 
+/*
+  orderedPair: a structure that stores an x and y value
+
+  @fields:
+  - x [int]: x value of ordered pair.
+  - y [int]: y value of ordered pair.
+
+
+  Author: Ganituen
+*/
 struct orderedPair {
   int x;
   int y;
 };
+
+/*
+  binSearch: binary search algorithm for finding key in array.
+
+  @params:
+  - arr [struct orderedPair]: array where we do the search.
+  - key [struct orderedPair]: an ordered pair that we try to find in arr.
+  
+  @returns:
+  - mid, if index is found.
+  - -1, otherwise.
+
+  Author: Ganituen
+*/
+int binSearch(struct orderedPair arr[], struct orderedPair key);
 
 /*
   systemFact1: checks the first system fact and returns the
