@@ -44,6 +44,6 @@ struct orderedPair {
 
   Author: Ganituen
 */
-int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2]);
+int systemFact1(struct orderedPair F[], struct orderedPair F1[], struct orderedPair F2[], struct orderedPair F3[]);
 
 #endif

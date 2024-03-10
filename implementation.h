@@ -12,7 +12,7 @@
   Created For:  CCDSTRU Machine Project, Ms. Jemie Que
 
   Created On:   March 07, 2024
-  Last Updated: March 10, 2024
+  Last Updated: March 11, 2024
 */
 
 #ifndef implementation_h
@@ -71,7 +71,7 @@ int T[SIZE_T] = {1, 2, 3, 4, 5, 6};
 
   Author: Ganituen
 */
-orderedPair C[SIZE_U * SIZE_U] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
+struct orderedPair C[SIZE_U * SIZE_U] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
 
 /*
   F: T X T
@@ -80,7 +80,7 @@ orderedPair C[SIZE_U * SIZE_U] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
 
   Author: Ganituen
 */
-orderedPair F[SIZE_T * SIZE_T] = {
+struct orderedPair F[SIZE_T * SIZE_T] = {
     {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {2, 1}, {2, 2}, {2, 3},
     {2, 4}, {2, 5}, {2, 6}, {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6},
     {4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {5, 1}, {5, 2}, {5, 3},
@@ -126,7 +126,7 @@ bool V[2] = {true, false};
 
   Author: Kraut
 */
-orderedPair S[4][6] = {{{1, 1},
+struct orderedPair S[4][6] = {{{1, 1},
                         {1, 3},
                         {2, 2},
                         {3, 1},
@@ -160,7 +160,7 @@ orderedPair S[4][6] = {{{1, 1},
 
   Author: Kraut
 */
-orderedPair P[SIZE_U][2] = {{{1, 1}, {2, 2}}, {{1, 2}, {2, 1}}};
+struct orderedPair P[SIZE_U][2] = {{{1, 1}, {2, 2}}, {{1, 2}, {2, 1}}};
 
 /* ========== SYSTEM VARIABLES
  */
@@ -187,12 +187,12 @@ bool next;
   and C, then their dimensions should also equal F and C to
   facilitate all possible elements.
 */
-orderedPair F1[SIZE_T * SIZE_T];
-orderedPair F2[SIZE_T * SIZE_T];
-orderedPair F3[SIZE_T * SIZE_T];
+struct orderedPair F1[SIZE_T * SIZE_T];
+struct orderedPair F2[SIZE_T * SIZE_T];
+struct orderedPair F3[SIZE_T * SIZE_T];
 
-orderedPair C1[SIZE_U * SIZE_U];
-orderedPair C2[SIZE_U * SIZE_U];
+struct orderedPair C1[SIZE_U * SIZE_U];
+struct orderedPair C2[SIZE_U * SIZE_U];
 
 /* ========== SYSTEM FACTS
  */
