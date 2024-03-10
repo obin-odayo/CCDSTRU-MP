@@ -31,22 +31,6 @@
   add your ideas in `notes.md`.
 */
 
-/* player1
-
-  Struct that contains all the data types for player 1.
-
-  Credits to Kraut for the idea of using structs.
-  Author: Ganituen
-*/
-struct player
-{
-  String name;                                // name of the player
-  struct orderedPair movesC[SIZE_T * SIZE_T]; // moves of the player in C.
-                                              // (C1 or C2)
-  struct orderedPair movesF[SIZE_U * SIZE_U]; // moves of the player in F.
-                                              // (F1 or F2)
-};
-
 /*
   systemFact1: checks the first system fact and returns the
   cardinality of F3.
@@ -62,131 +46,62 @@ struct player
 
   Author: Ganituen
 */
-int systemFact1(struct orderedPair F[], struct orderedPair F1[], struct orderedPair F2[], struct orderedPair F3[])
-{
-  int cardinality = 0; // variable of cardinality of F3.
-                       // Assume as 0.
-  int i, j;
-  struct orderedPair unionF[SIZE_T]; // array that contains the union of F1 and F2.
-                                     // recall that F1 and F2 are subsets of F.
+int systemFact1(struct orderedPair F[], struct orderedPair F1[], struct orderedPair F2[], struct orderedPair F3[]) {
+    // Get union of F1 and F2
+    struct orderedPair unionF[SIZE_2T];
 
-  int key[2];
-  int size = 0; // int that stores the size of unionF
-                // Assume as 0.
-  bool checker;
-
-  // add all elements of F1 to unionF
-  for (i = 0; i < SIZE_T * SIZE_T; i++)
-  {
-    unionF->x = F1[i].x;
-    unionF->y = F1[i].y;
-    size++;
-  }
-
-  // all all elements of F2 to unionF, if unionF does not contain it yet.
-  for (i = 0; i < SIZE_T * SIZE_T; i++)
-  {
-    key[0] = F2[i].x;
-    key[1] = F2[i].y;
-    checker = false; // bool that checks if key is in unionF or not.
-                     // assume false
-
-    for (j = 0; j < SIZE_T * SIZE_T; j++)
-    {
-      if (key[0] == unionF[j].x && key[1] == unionF[j].y)
-      {
-        checker = true;
-        break;
-      }
-    }
-
-    // if checker is not true
-    if (!checker)
-    {
-      unionF[size].x = key[0];
-      unionF[size].y = key[1];
-      size++;
-    }
-  }
-
-  // do the set subtraction of F - unionF
-  for (i = 0; i < SIZE_T * SIZE_T; i++)
-  {
-    checker = false; // assume false
-    key[0] = unionF[i].x;
-    key[1] = unionF[i].y;
-
-    for (j = 0; j < SIZE_T * SIZE_T; j++)
-    {
-      if (key[0] == F[j].x && key[1] == F[j].y)
-      {
-        checker = true;
-        break;
-      }
-    }
-
-    if (!checker)
-    {
-      F3[cardinality].x = key[0];
-      F3[cardinality].y = key[1];
-      cardinality++;
-    }
-  }
-
-  return cardinality;
+    return cardinality;
 }
 
 int main()
 {
-  bool game_start = true;
   int i, j;
-  struct player P1;
-  struct player P2;
+  
+  /* ========== SYSTEM INITIALIZATION
 
-  while (game_start)
+    Initialize two of boolean System Variables here.
+    Good is false
+    next is false
+
+    I used V[] to represent the boolean values.
+    - V[0] is true.
+    - V[1] is false.
+
+    Initialize C1, C2, F1, and F1 as empty sets then assign
+    them to their respective structs.
+
+    Author: Ganituen
+  */
+  good = V[1]; // true
+  over = V[1];
+
+  struct orderedPair complete[12] = {
+      {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}, {10, 10}, {11, 11}, {12, 12}};
+  struct orderedPair A[12] = {{1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {8, 8}};
+  struct orderedPair B[12] = {{4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}};
+  struct orderedPair F[12];
+  
+  // for (i = 0; i < SIZE_U * SIZE_U; i++)
+  // {
+  //   P1.movesC[i].x = C1[i].x;
+  //   P2.movesC[i].y = C2[i].y;
+  // }
+
+  /* ========== SYSTEM FACTS
+
+    Check if the system facts are still valid.
+    1. Get the array F3 given F1 and F2 after the moves.
+    2. Check if game is over.
+
+    Author: Ganituen [1];
+            ___ [2]
+  */
+  int sizeF3 = systemFact1(complete, A, B, F);
+
+  for (i = 0; i < 12; i++)
   {
-    /* ========== SYSTEM INITIALIZATION
-
-      Initialize two of boolean System Variables here.
-      Good is false
-      next is false
-
-      I used V[] to represent the boolean values.
-      - V[0] is true.
-      - V[1] is false.
-
-      Initialize C1, C2, F1, and F1 as empty sets then assign
-      them to their respective structs.
-
-      Author: Ganituen
-    */
-    good = V[1]; // true
-    over = V[1];
-
-    for (i = 0; i < SIZE_T * SIZE_T; i++)
-    {
-      P1.movesF[i].x = F1[i].x;
-      P2.movesF[i].y = F2[i].y;
-    }
-
-    for (i = 0; i < SIZE_U * SIZE_U; i++)
-    {
-      P1.movesC[i].x = C1[i].x;
-      P2.movesC[i].y = C2[i].y;
-    }
-
-    /* ========== SYSTEM FACTS
-
-      Check if the system facts are still valid.
-      1. Get the array F3 given F1 and F2 after the moves.
-      2. Check if game is over.
-
-      Author: Ganituen [1];
-              ___ [2]
-    */
-    int sizeF3 = systemFact1(F, P1.movesF, P2.movesF, F3);
-
-    game_start = false;
+    printf("F\t (%d, %d)\n", F[i].x, F[i].y);
   }
+
   return 0;
 }

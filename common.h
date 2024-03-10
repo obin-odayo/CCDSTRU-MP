@@ -18,8 +18,8 @@
 #ifndef common_h
 #define common_h
 
-#include <stdbool.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 
 typedef char String[32];

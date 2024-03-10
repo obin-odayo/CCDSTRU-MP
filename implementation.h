@@ -21,7 +21,9 @@
 #include "common.h"
 
 #define SIZE_U 2
+#define SIZE_2U 4 // SIZE_U * 2
 #define SIZE_T 6
+#define SIZE_2T 36 // SIZE_T * 2
 #define NONE -1
 #define ROW_INDEX 0
 #define COL_INDEX 1
@@ -71,7 +73,7 @@ int T[SIZE_T] = {1, 2, 3, 4, 5, 6};
 
   Author: Ganituen
 */
-struct orderedPair C[SIZE_U * SIZE_U] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
+struct orderedPair C[4] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
 
 /*
   F: T X T
@@ -80,7 +82,7 @@ struct orderedPair C[SIZE_U * SIZE_U] = {{1, 1}, {1, 2}, {2, 1}, {2, 2}};
 
   Author: Ganituen
 */
-struct orderedPair F[SIZE_T * SIZE_T] = {
+struct orderedPair F[SIZE_2T] = {
     {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {2, 1}, {2, 2}, {2, 3},
     {2, 4}, {2, 5}, {2, 6}, {3, 1}, {3, 2}, {3, 3}, {3, 4}, {3, 5}, {3, 6},
     {4, 1}, {4, 2}, {4, 3}, {4, 4}, {4, 5}, {4, 6}, {5, 1}, {5, 2}, {5, 3},
@@ -187,12 +189,12 @@ bool next;
   and C, then their dimensions should also equal F and C to
   facilitate all possible elements.
 */
-struct orderedPair F1[SIZE_T * SIZE_T];
-struct orderedPair F2[SIZE_T * SIZE_T];
-struct orderedPair F3[SIZE_T * SIZE_T];
+struct orderedPair F1[SIZE_2T];
+struct orderedPair F2[SIZE_2T];
+struct orderedPair F3[SIZE_2T];
 
-struct orderedPair C1[SIZE_U * SIZE_U];
-struct orderedPair C2[SIZE_U * SIZE_U];
+struct orderedPair C1[4];
+struct orderedPair C2[4];
 
 /* ========== SYSTEM FACTS
  */
@@ -208,7 +210,7 @@ struct orderedPair C2[SIZE_U * SIZE_U];
   NextPlayerMove handles the player actions in the game board C.
 
   @params:
-  - pos [int *]: a 2-d array of the player's move
+  - pos [struct orderedPair]: a 2-d array of the player's move
 
   @restrictions:
   - pos must be in F.
@@ -218,7 +220,7 @@ struct orderedPair C2[SIZE_U * SIZE_U];
   Credits to Telan and Kraut for additional interpretations.
   Author: Ganituen
 */
-void NextPlayerMove(int pos[SIZE_U]);
+void NextPlayerMove(struct orderedPair [SIZE_U]);
 
 /*
   GameOver handles ending the game and determines who won the
