@@ -38,7 +38,8 @@
   Credits to Kraut for the idea of using structs.
   Author: Ganituen
 */
-struct player {
+struct player
+{
   String name;                                // name of the player
   struct orderedPair movesC[SIZE_T * SIZE_T]; // moves of the player in C.
                                               // (C1 or C2)
@@ -61,12 +62,12 @@ struct player {
 
   Author: Ganituen
 */
-int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2]) {
+int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2])
+{
   int cardinality = 0; // variable of cardinality of F3.
                        // Assume as 0.
   int i, j;
-  struct orderedPair
-      unionF[SIZE_T]; // array that contains the union of F1 and F2.
+  struct orderedPair unionF[SIZE_T]; // array that contains the union of F1 and F2.
                       // recall that F1 and F2 are subsets of F.
 
   int key[2];
@@ -75,48 +76,57 @@ int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2]) {
   bool checker;
 
   // add all elements of F1 to unionF
-  for (i = 0; i < SIZE_T * SIZE_T; i++) {
+  for (i = 0; i < SIZE_T * SIZE_T; i++)
+  {
     unionF->x = F1[i][0];
     unionF->y = F1[i][1];
     size++;
   }
 
   // all all elements of F2 to unionF, if unionF does not contain it yet.
-  for (i = 0; i < SIZE_T * SIZE_T; i++) {
+  for (i = 0; i < SIZE_T * SIZE_T; i++)
+  {
     key[0] = F2[i][0];
     key[1] = F2[i][1];
     checker = false; // bool that checks if key is in unionF or not.
                      // assume false
 
-    for (j = 0; j < SIZE_T * SIZE_T; j++) {
-      if (key[0] == unionF[j][0] && key[1] == unionF[j][1]) {
+    for (j = 0; j < SIZE_T * SIZE_T; j++)
+    {
+      if (key[0] == unionF[j].x && key[1] == unionF[j].y)
+      {
         checker = true;
         break;
       }
     }
 
     // if checker is not true
-    if (!checker) {
-      unionF[size][0] = key[0];
-      unionF[size][1] = key[1];
+    if (!checker)
+    {
+      unionF[size].x = key[0];
+      unionF[size].y = key[1];
       size++;
     }
   }
 
   // do the set subtraction of F - unionF
-  for (i = 0; i < SIZE_T * SIZE_T; i++) {
+  for (i = 0; i < SIZE_T * SIZE_T; i++)
+  {
     checker = false; // assume false
-    key[0] = unionF[i][0];
-    key[1] = unionF[i][1];
+    key[0] = unionF[i].x;
+    key[1] = unionF[i].y;
 
-    for (j = 0; j < SIZE_T * SIZE_T; j++) {
-      if (key[0] == F[j][0] && key[1] == F[j][1]) {
+    for (j = 0; j < SIZE_T * SIZE_T; j++)
+    {
+      if (key[0] == F[j][0] && key[1] == F[j][1])
+      {
         checker = true;
         break;
       }
     }
 
-    if (!checker) {
+    if (!checker)
+    {
       F3[cardinality][0] = key[0];
       F3[cardinality][1] = key[1];
       cardinality++;
@@ -126,13 +136,15 @@ int systemFact1(int F[][2], int F1[][2], int F2[][2], int F3[][2]) {
   return cardinality;
 }
 
-int main() {
+int main()
+{
   bool game_start = true;
   int i, j;
   struct player P1;
   struct player P2;
 
-  while (game_start) {
+  while (game_start)
+  {
     /* ========== SYSTEM INITIALIZATION
 
       Initialize two of boolean System Variables here.
@@ -157,7 +169,8 @@ int main() {
   }
 
   for (i = 0; i < SIZE_U * SIZE_U; i++)
-    for (j = 0; j < 2; j++) {
+    for (j = 0; j < 2; j++)
+    {
       P1.movesC[i][j] = C1[i][j];
       P2.movesC[i][j] = C2[i][j];
     }
