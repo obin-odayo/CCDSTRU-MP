@@ -1,4 +1,5 @@
 # Notes
+
 Notes on Machine Project specifications.
 
 ## Things to do
@@ -7,19 +8,19 @@ Notes on Machine Project specifications.
 - [x] System Variables
 - [ ] System Facts
   - [x] F3 = F - (F1 U F2), for checking
-  - [ ] over if and only if..., unimplemented
+  - [x] over if and only if..., unimplemented
 - [x] System Initialization
   - Comment: C1, C2, F1, F2, how do we initialize these as null set?
-- [ ] System States and Behavior
+- [x] System States and Behavior
   - [x] GameOver, for checking
-  - [ ] NextPlayerMove, unimplemented
-- [ ] Game proper, unimplemented
-
+  - [x] NextPlayerMove, unimplemented
+- [x] Game proper, unimplemented
 
 ## Applicable Sets
+
 - These seem to be arrays, so it would be best to implement them as arrays.
 
-### Interpretations
+### Interpretations 1
 
 - U  -  set of integers less than 3
 - T  -  set of integers less than 7
@@ -30,11 +31,11 @@ Notes on Machine Project specifications.
         a 2 x 2 matrix of 2-D arrays
 - S  -  possible solutions for each quadrant of the 6 x 6 matrix
 
-
 ## System Variables
+
 - "good", "over", "next" in V means that the phrases "good", "over", and "next" can have the property of true or false. (See System Initialization for these).
 
-### Interpretations
+### Interpretations 2
 
 - good  -  determines the legality of a move
 - over  -  determines if the game is over
@@ -45,18 +46,21 @@ Notes on Machine Project specifications.
            F1 is a subset of F.
 - F2    -  The moves of player 2 in the board F.
            F2 is a subset of F.
-- F3    -  The moves available in the matrix F. 
+- F3    -  The moves available in the matrix F.
            F3 is a subset of F.
 
 ## System Facts
+
 - I think what system facts mean is that for every thing the program does, it must meet the two system facts (so, if the code does a process and we check a system fact after the process and it returns false. Then, the game is done.)
 
-### Interpretations
+### Interpretations 3
+
 - F3 = F - (F1 U F2)    -    The moves available in the matrix F.
-- over iff. ...         -    Shows the game is done if the 
+- over iff. ...         -    Shows the game is done if the
                              conditions are met
 
 ## System Initialization
+
 - "good" and "next" is initialized as false.
 - However, "next" (at initialization) is left without definition.
 - Player A's sets
@@ -69,6 +73,7 @@ Notes on Machine Project specifications.
 - "over" is defined as false at first. "over" becomes true if there are no more available moves (F3 is an empty set) or if any of the two players were able to achieve an element in P based on their respective sets (C1 or C2).
   
 ## System States and Behavior
+
 - I think what this means is that all the lines below it will run if the argument inside is true.
   - So, NextPlayerMove will run if pos in F is true.
   - And, GameOver will run if over is true.
@@ -79,4 +84,5 @@ Notes on Machine Project specifications.
   - For example, if pos = F(5,6), then c = 2 and d = 2. Thus, pos is in quadrant C(2,2). You can refer to the grid reference in specs.h for an idea of how it looks like.
 
 ## Miscellaneous
+
 - Maybe we can implement structure dataypes for players for easier identification (set of moves, set of quadrants, and name)
