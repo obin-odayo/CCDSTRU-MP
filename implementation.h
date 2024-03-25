@@ -12,7 +12,7 @@
   Created For:  CCDSTRU Machine Project, Ms. Jemie Que
 
   Created On:   March 07, 2024
-  Last Updated: March 11, 2024
+  Last Updated: March 18, 2024
 */
 
 #ifndef implementation_h
@@ -25,8 +25,9 @@
 #define SIZE_T 6
 #define SIZE_2T 36 // SIZE_T * 2
 #define NONE -1
-#define ROW_INDEX 0
-#define COL_INDEX 1
+#define NUM_SOLUTIONS 4
+#define SIZE_SOLUTION 6
+#define BOARD_SIZE 6
 
 /*
   README
@@ -128,30 +129,27 @@ bool V[2] = {true, false};
 
   Author: Kraut
 */
-struct orderedPair S[4][6] = {{{1, 1},
-                        {1, 3},
-                        {2, 2},
-                        {3, 1},
-                        {3, 3},
-                        {NONE, NONE}}, // Solution for C(1,1) represented as "x"
-                       {{4, 4},
-                        {4, 6},
-                        {5, 5},
-                        {6, 4},
-                        {6, 6},
-                        {NONE, NONE}}, // Solution for C(2,2) represented as "o"
-                       {{1, 5},
-                        {2, 4},
-                        {2, 5},
-                        {2, 6},
-                        {3, 5},
-                        {NONE, NONE}}, // Solution for C(1,2) represented as "v"
-                       {{4, 1},
-                        {4, 3},
-                        {5, 1},
-                        {5, 3},
-                        {6, 1},
-                        {6, 3}}}; // Solution for C(2,1) represented as "s"
+struct orderedPair S[4][6] = {
+    {{1, 1},
+     {1, 3},
+     {2, 2},
+     {3, 1},
+     {3, 3},
+     {NONE, NONE}}, // Solution for C(1,1) represented as "x"
+    {{4, 4},
+     {4, 6},
+     {5, 5},
+     {6, 4},
+     {6, 6},
+     {NONE, NONE}}, // Solution for C(2,2) represented as "o"
+    {{1, 5},
+     {2, 4},
+     {2, 5},
+     {2, 6},
+     {3, 5},
+     {NONE, NONE}}, // Solution for C(1,2) represented as "v"
+    {{4, 1}, {4, 3}, {5, 1}, {5, 3}, {6, 1}, {6, 3}}}; // Solution for C(2,1)
+                                                       // represented as "s"
 
 /*
   P is the applicable quadrants that must be achieved in order
@@ -189,12 +187,12 @@ bool next;
   and C, then their dimensions should also equal F and C to
   facilitate all possible elements.
 */
-struct orderedPair F1[SIZE_2T];
-struct orderedPair F2[SIZE_2T];
-struct orderedPair F3[SIZE_2T];
+// struct orderedPair F1[SIZE_2T];
+// struct orderedPair F2[SIZE_2T];
+// struct orderedPair F3[SIZE_2T];
 
-struct orderedPair C1[4];
-struct orderedPair C2[4];
+// struct orderedPair C1[4];
+// struct orderedPair C2[4];
 
 /* ========== SYSTEM FACTS
  */
@@ -206,11 +204,17 @@ struct orderedPair C2[4];
 
 /* ========== SYSTEM STATES AND BEHAVIOR
  */
+
 /*
   NextPlayerMove handles the player actions in the game board C.
 
   @params:
   - pos [struct orderedPair]: a 2-d array of the player's move
+  - F3 [struct orderedPair]: array of orderedPairs
+  - sizeF3 [int]: number of elements in F3
+  - A [struct playerType]: player A
+  - B [struct playerType]: player B
+  - board [char]: 2-d array of the game board and moves
 
   @restrictions:
   - pos must be in F.
@@ -220,7 +224,8 @@ struct orderedPair C2[4];
   Credits to Telan and Kraut for additional interpretations.
   Author: Ganituen
 */
-void NextPlayerMove(struct orderedPair [SIZE_U]);
+void NextPlayerMove(struct orderedPair pos, struct orderedPair F3[], int sizeF3,
+                   struct playerType *A, struct playerType *B, char board[][6]);
 
 /*
   GameOver handles ending the game and determines who won the
@@ -228,11 +233,96 @@ void NextPlayerMove(struct orderedPair [SIZE_U]);
 
   @params:
   - over [bool]: boolean to check if the game is over.
+  - next [bool]: boolean to check if it's player A's turn.
+  - C1 [struct orderedPair]: array representing player 1's quadrants.
+  - sizeC1 [int]: size of player 1's quadrants array.
+  - C2 [struct orderedPair]: array representing player 2's quadrants.
+  - sizeC2 [int]: size of player 2's quadrants array.
 
   @returns:
-  - bool, to stop the game from going to the next player.
+  - char *, winning message and who won. If the game is not over, an empty
+  string is returned.
 
   Author: Ganituen
 */
-bool GameOver(bool over);
+char *GameOver(bool over, struct orderedPair C1[], int sizeC1,
+               struct orderedPair C2[], int sizeC2, char result[][7], int sizeF3);
+
+/* intializeF3: Initializes F3 for the program.
+
+   @params:
+   - F3 [struct orderedPair*]: an array of all unoccupied cells in the F matrix.
+
+   @returns:
+   - size of F3
+*/
+int initializeF3(struct orderedPair F3[]);
+
+/*
+  systemFact1: performs the first system fact and returns the
+  cardinality of F3.
+
+  @params:
+  - F1 [struct orderedPair]: array F1. Moves of player 1 in board F.
+  - F2 [struct orderedPair]: array F2. Moves of player 2 in board F.
+  - F3 [struct orderedPair]: array F3. Available moves in board F.
+  - sizeF1 [int]: cardinality of F1.
+  - sizeF2 [int]: cardinality of F2.
+  - sizeF3 [int]: cardinality of F3.
+
+  @returns:
+  - sizeF3 [int]: cardinality of F3.
+
+  Precondition: intersection of F1 & F2 is a null set (player A and B do not
+  have a move on the same cell)
+
+  Author: Ganituen & Kraut
+*/
+int systemFact1(struct orderedPair F1[], struct orderedPair F2[],
+                struct orderedPair F3[], int sizeF1, int sizeF2, int sizeF3);
+
+/* checkIfGood: checks if pos is in F3 (set of all available moves).
+
+  Remark: interpretation of "pos is an element of F3" in NextPlayerMove,
+  line    1.
+
+  @params:
+  - pos [struct orderedPair]: current player's move.
+  - F3 [struct orderedPair *]: set of all available moves in board F.
+  - sizeF3 [int]: size of F3.
+
+  @returns:
+  - true if pos is in F3, else returns false.
+
+  Assumption: over is false.
+
+  Author: Kraut
+*/
+bool checkIfInF3(struct orderedPair pos, struct orderedPair F3[], int sizeF3);
+
+/* checkForS: checks if the player has achieved a solution in S given their
+   moves as a subset of F. If yes, adds the orderedPair quadrant to the player's
+   set C.
+
+   @params:
+   - FPlayer [struct orderedPair]: array of the current player's moves.
+   - sizeFPlayer [int]: size of FPlayer.
+   - CPlayer [struct orderedPair]: array of the player's quadrant/s with
+   complete solution.
+   - CPlayerSize [int *]: size of CPlayer.
+
+   @returns 1 if a new solution was found, else returns 0.
+
+   Author: Kraut
+*/
+void checkForS(struct playerType *player);
+
 #endif
+
+/*
+  END OF implementation.h
+  Ganituen, Kraut, Telan
+
+  CCDSTRU Machine Project
+  S14, Ms. Jemie Que
+*/

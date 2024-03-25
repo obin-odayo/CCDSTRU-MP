@@ -1,6 +1,21 @@
 # Notes
 Notes on Machine Project specifications.
 
+## Things to do
+
+- [x] Applicable Sets
+- [x] System Variables
+- [ ] System Facts
+  - [x] F3 = F - (F1 U F2), for checking
+  - [ ] over if and only if..., unimplemented
+- [x] System Initialization
+  - Comment: C1, C2, F1, F2, how do we initialize these as null set?
+- [ ] System States and Behavior
+  - [x] GameOver, for checking
+  - [ ] NextPlayerMove, unimplemented
+- [ ] Game proper, unimplemented
+
+
 ## Applicable Sets
 - These seem to be arrays, so it would be best to implement them as arrays.
 
