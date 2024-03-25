@@ -268,9 +268,10 @@ struct orderedPair getPlayerInput() {
           warning: ignoring returnn value of
             `scanf` declared with attribute
             `warn_unused result`
+        - Disregard this, this seems like a Replit problem(?)
+          compiled this on my own computer and there's no problem
     */
-    scanf("%d", &pos.x);
-    scanf("%d", &pos.y);
+    scanf("%d %d", &pos.x, &pos.y);
     if (pos.x > 6 || pos.x < 1)
       printf("Invalid row.\n");
     else if (pos.y > 6 || pos.y < 1)
